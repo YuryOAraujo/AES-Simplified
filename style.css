@@ -1,0 +1,11 @@
+.result {
+    margin-top: 20px;
+}
+
+.draggable, .draggable-column {
+    width: 85px;
+    display: inline-block;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+}

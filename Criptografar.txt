@@ -1,0 +1,54 @@
+Criptografar
+
+Letra Binário
+A     01000001
+
+Chave
+00000000 00000001
+
+S-Box
+Bit     Output
+0       1
+1       0
+
+A0 A4 A8  A12
+A1 A5 A9 A13
+A2 A6 A10 A14
+A3 A7 A11 A15
+
+Adicionar 00000000 na Letra
+00000000 01000001
+
+Montar bloco
+0 0 0 0 
+0 0 1 0
+0 0 0 0
+0 0 0 1
+
+Substituir na S-Box
+1 1 1 1
+1 1 0 1
+1 1 1 1
+1 1 1 0
+
+Camada de Difusão (Deslocamento das linhas)
+1 1 1 1 -> Mantém
+1 0 1 1 -> Desloca uma para esquerda
+1 1 1 1 -> Desloca duas para a esquerda
+0 1 1 1 -> Desloca três para a esquerda
+
+Camada de Difusão (Deslocar colunas)
+1 1 1 1
+1 1 0 1
+1 1 1 1
+1 0 1 1 -> Desloca as colunas uma posição para a direita
+
+Converter o bloco em string
+1111111010111111
+
+Adicionar a chave, operação XOR
+1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1 
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+________________________________
+1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 0 
+

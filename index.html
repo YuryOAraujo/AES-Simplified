@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Simplificado</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container bg-light text-center min-vh-100 rounded-4 py-3">
+        <h1>AES Simplificado</h1>
+        <p>Digite dois caracteres para convertê-los em binário (Tabela ASCII).</p>
+
+        <div class="input-group mb-4 w-50 mx-auto">
+            <input type="text" id="charInput1" class="form-control text-center" placeholder="Primeiro caractere" maxlength="1">
+            <input type="text" id="charInput2" class="form-control text-center" placeholder="Segundo caractere" maxlength="1">
+            <button id="convertButton" class="btn btn-primary w-25">Converter</button>
+        </div>
+
+        <div class="input-group mb-4 w-50 mx-auto">
+            <input type="text" id="keyInput" class="form-control text-center" placeholder="Chave de 16 bits" readonly>
+            <button id="generateKeyButton" class="btn btn-primary w-25">Gerar Chave</button>
+        </div>
+
+        <div id="result" class="mt-4 w-50 mx-auto">
+            <p id="result1" class="result mb-2"></p>
+            <p id="result2" class="result mb-2"></p>
+        </div>
+
+        <div id="binarySection" class="d-none mt-4">
+            <p>Agora que convertemos nossos caracteres, vamos criar um bloco para criptografá-los.</p>
+            <p class="fw-bold">Exemplo: (A): 01000001 (B): 01000010 = 0100000101000010</p>
+            <div class="input-group mb-3 w-50 mx-auto">
+                <input type="text" id="binaryInput" class="form-control text-center" placeholder="Digite o binário correspondente" maxlength="16">
+            </div>
+            <p id="binaryFeedback" class="text-center"></p>
+        </div>
+
+        <div id="matrixSection" class="d-none mt-4">
+            <p class="fw-bold">Agora, insira os valores do bloco na matriz 4x4.</p>
+            <p class="text-muted">Preencha cada célula com um dos 8-bit chunks do binário acima, seguindo a ordem correta.</p>
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered w-auto">
+                    <tbody>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A0" placeholder="A0"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A1" placeholder="A1"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A2" placeholder="A2"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A3" placeholder="A3"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A4" placeholder="A4"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A5" placeholder="A5"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A6" placeholder="A6"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A7" placeholder="A7"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A8" placeholder="A8"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A9" placeholder="A9"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A10" placeholder="A10"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A11" placeholder="A11"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A12" placeholder="A12"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A13" placeholder="A13"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A14" placeholder="A14"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A15" placeholder="A15"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="matrixFeedback" class="text-center mt-3"></p>
+        </div>
+
+        <div id="sboxSection" class="d-none mt-4">
+            <p class="fw-bold">Agora, aplique a S-Box à matriz.</p>
+            <p class="text-muted">Substitua cada bit conforme a tabela abaixo:</p>
+            <table class="table table-bordered w-auto mx-auto">
+                <thead>
+                    <tr>
+                        <th>Bit</th>
+                        <th>Output</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-muted">Dica: Inverta cada bit (0 → 1, 1 → 0) e preencha a nova matriz abaixo.</p>
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered w-auto">
+                    <tbody>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S0"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S1"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S2"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S3"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S4"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S5"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S6"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S7"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S8"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S9"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S10"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S11"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S12"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S13"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S14"></td>
+                            <td><input type="number" min="0" max="1" class="sbox-cell form-control text-center" id="S15"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="sboxFeedback" class="text-center mt-3"></p>
+        </div>
+
+        <div id="shiftRowsSection" class="d-none mt-4">
+            <p class="fw-bold">Deslocamento das Linhas</p>
+            <p class="text-muted">Desloque as linhas conforme as instruções abaixo:</p>
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered w-auto">
+                    <tbody id="shiftMatrix">
+                        <tr>
+                            <td draggable="true" class="draggable form-control text-center">A0</td>
+                            <td draggable="true" class="draggable form-control text-center">A4</td>
+                            <td draggable="true" class="draggable form-control text-center">A8</td>
+                            <td draggable="true" class="draggable form-control text-center">A12</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable form-control text-center">A1</td>
+                            <td draggable="true" class="draggable form-control text-center">A5</td>
+                            <td draggable="true" class="draggable form-control text-center">A9</td>
+                            <td draggable="true" class="draggable form-control text-center">A13</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable form-control text-center">A2</td>
+                            <td draggable="true" class="draggable form-control text-center">A6</td>
+                            <td draggable="true" class="draggable form-control text-center">A10</td>
+                            <td draggable="true" class="draggable form-control text-center">A14</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable form-control text-center">A3</td>
+                            <td draggable="true" class="draggable form-control text-center">A7</td>
+                            <td draggable="true" class="draggable form-control text-center">A11</td>
+                            <td draggable="true" class="draggable form-control text-center">A15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="shiftFeedback" class="text-center mt-3"></p>
+        </div>
+
+        <div id="columnShiftSection" class="d-none mt-4">
+            <p class="fw-bold">Deslocamento das Colunas</p>
+            <p class="text-muted">Agora, você deve deslocar as colunas para a direita. Veja as instruções:</p>
+            <p class="text-muted">Desloque as colunas uma posição para a direita.</p>
+            <p class="text-muted">Dica: Clique e arraste os valores das colunas para deslocá-las.</p>
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered w-auto">
+                    <tbody id="shiftColumnMatrix">
+                        <tr>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C0">C0</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C1">C1</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C2">C2</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C3">C3</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C4">C4</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C5">C5</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C6">C6</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C7">C7</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C8">C8</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C9">C9</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C10">C10</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C11">C11</td>
+                        </tr>
+                        <tr>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C12">C12</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C13">C13</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C14">C14</td>
+                            <td draggable="true" class="draggable-column form-control text-center" id="C15">C15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="columnShiftFeedback" class="text-center mt-3"></p>
+        </div>
+
+        <div id="xorSection" class="d-none mt-4">
+            <p class="fw-bold">Passo Final: Adicionar a Chave (Operação XOR)</p>
+            <p class="text-muted">Agora, você deve realizar a operação XOR entre o resultado do MixColumns e a chave.</p>
+            <div class="d-flex justify-content-center">
+                <table class="table table-bordered w-auto">
+                    <tbody id="xorMatrix">
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M0" placeholder="M0" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M1" placeholder="M1" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M2" placeholder="M2" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M3" placeholder="M3" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M4" placeholder="M4" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M5" placeholder="M5" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M6" placeholder="M6" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M7" placeholder="M7" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M8" placeholder="M8" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M9" placeholder="M9" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M10" placeholder="M10" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M11" placeholder="M11" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M12" placeholder="M12" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M13" placeholder="M13" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M14" placeholder="M14" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="M15" placeholder="M15" disabled></td>
+                        </tr>
+
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K0" placeholder="K0" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K1" placeholder="K1" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K2" placeholder="K2" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K3" placeholder="K3" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K4" placeholder="K4" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K5" placeholder="K5" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K6" placeholder="K6" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K7" placeholder="K7" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K8" placeholder="K8" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K9" placeholder="K9" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K10" placeholder="K10" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K11" placeholder="K11" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K12" placeholder="K12" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K13" placeholder="K13" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K14" placeholder="K14" disabled></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="K15" placeholder="K15" disabled></td>
+                        </tr>
+ 
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X0" placeholder="X0"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X1" placeholder="X1"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X2" placeholder="X2"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X3" placeholder="X3"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X4" placeholder="X4"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X5" placeholder="X5"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X6" placeholder="X6"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X7" placeholder="X7"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X8" placeholder="X8"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X9" placeholder="X9"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X10" placeholder="X10"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X11" placeholder="X11"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X12" placeholder="X12"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X13" placeholder="X13"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X14" placeholder="X14"></td>
+                            <td><input type="number" min="0" max="1" class="form-control text-center" id="X15" placeholder="X15"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p id="xorFeedback" class="text-center mt-3"></p>
+            <button id="copyXORButton" class="btn btn-success d-none mb-5">Copiar Resultado XOR</button>
+            
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+Descriptografar
+
+Bloco
+1111111010111110
+
+Chave
+0000000000000001
+
+Realizar operação XOR, para subtrair a chave
+1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+_________________________________
+1 1 1 1 1 1 1 0 1 0 1 1 1 1 1 1
+
+Reorganizar Bloco
+A1 A5 A9  A13
+A2 A6 A10 A14
+A3 A7 A11 A15
+A4 A8 A12 A16
+
+1 1 1 1
+1 1 0 1
+1 1 1 1
+1 0 1 1
+
+Reverter difusão (Deslocar colunas uma posição para a esquerda)
+1 1 1 1
+1 0 1 1
+1 1 1 1
+0 1 1 1
+
+Reverter difusão (Deslocar linhas)
+1 1 1 1 -> Mantém
+1 1 0 1 -> Uma para a direita
+1 1 1 1 -> Duas para a direita
+1 1 1 0 -> Três para a direita
+
+Substituir na S-Box
+0 0 0 0
+0 0 1 0
+0 0 0 0
+0 0 0 1
+
+Reordenar em String
+00000000 01000001
+
+Remover os oito bits iniciais
+01000001
+
+Binário Letra
+01000001 A
