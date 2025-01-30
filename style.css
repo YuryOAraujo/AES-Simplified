@@ -9,3 +9,7 @@
     padding: 5px;
     margin: 5px;
 }
+
+.container{
+    background-color: rgba(126, 126, 126, 0.075);
+}
