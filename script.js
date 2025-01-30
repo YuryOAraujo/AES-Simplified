@@ -39,12 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
             result2.textContent = `Segundo caractere (${char2}): ${binary2}`;
 
             binarySection.classList.remove('d-none');
+            window.location.href = '#binarySection';
         } else {
             result1.textContent = '';
             result2.textContent = '';
             alert('Por favor, insira exatamente dois caracteres.');
         }
     });
+
+    function validateKeyInput(input) {
+        input.value = input.value.replace(/[^01]/g, '').slice(0, 16);
+    }    
 
     binaryInput.addEventListener('input', () => {
         const char1 = charInput1.value;
@@ -57,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
             binaryFeedback.classList.add('text-success');
 
             matrixSection.classList.remove('d-none');
+            window.location.href = '#matrixSection';
         } else {
             binaryInput.classList.remove('border-success');
             binaryFeedback.textContent = '';
@@ -111,6 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             
             sboxSection.classList.remove('d-none');
+            window.location.href = '#sboxSection';
         } else {
             matrixFeedback.textContent = 'Preencha a matriz corretamente.';
             matrixFeedback.classList.remove('text-success');
@@ -142,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             
             shiftRowsSection.classList.remove('d-none');
+            window.location.href = '#shiftRowsSectionsSection';
             populateShiftMatrix();
         } else {
             sboxFeedback.textContent = 'Preencha a matriz corretamente de acordo com a S-Box.';
@@ -225,6 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
             shiftFeedback.textContent = 'Deslocamento das linhas realizado corretamente!';
             shiftFeedback.classList.add('text-success');
             columnShiftSection.classList.remove('d-none');
+            window.location.href = '#columnShiftSection';
             populateColumnShiftMatrix();
         } else {
             shiftFeedback.textContent = 'Erro no deslocamento das linhas. Verifique a ordem.';
@@ -323,6 +332,7 @@ document.addEventListener('DOMContentLoaded', () => {
             columnShiftFeedback.textContent = "Deslocamento das colunas realizado corretamente!";
             columnShiftFeedback.classList.add("text-success");
             xorSection.classList.remove("d-none");
+            window.location.href = '#xorSection';
             populateXORMatrix();
         } else {
             columnShiftFeedback.textContent = "Erro no deslocamento das colunas. Verifique a ordem.";
@@ -381,6 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
             xorFeedback.textContent = "Operação XOR realizada corretamente!";
             xorFeedback.classList.add("text-success");
             document.getElementById('copyXORButton').classList.remove('d-none'); 
+            window.location.href = '#copyXORButton';
         } else {
             xorFeedback.textContent = "Erro na operação XOR. Verifique os valores.";
             xorFeedback.classList.remove("text-success");

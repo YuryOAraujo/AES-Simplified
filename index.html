@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container bg-light text-center min-vh-100 rounded-4 py-3">
+    <div class="container bg-light text-center min-vh-100 rounded-4 p-3">
         <h1>AES Simplificado</h1>
         <p>Digite dois caracteres para convertê-los em binário (Tabela ASCII).</p>
 
@@ -19,7 +19,7 @@
         </div>
 
         <div class="input-group mb-4 w-50 mx-auto">
-            <input type="text" id="keyInput" class="form-control text-center" placeholder="Chave de 16 bits" readonly>
+            <input type="text" id="keyInput" class="form-control text-center" placeholder="Digite ou gere sua Chave de 16 bits" maxlength="16" oninput="validateKeyInput(this)">
             <button id="generateKeyButton" class="btn btn-primary w-25">Gerar Chave</button>
         </div>
 
@@ -204,7 +204,8 @@
 
         <div id="xorSection" class="d-none mt-4">
             <p class="fw-bold">Passo Final: Adicionar a Chave (Operação XOR)</p>
-            <p class="text-muted">Agora, você deve realizar a operação XOR entre o resultado do MixColumns e a chave.</p>
+            <p class="text-muted">Agora, você deve realizar a operação XOR entre o resultado do bloco acima e a chave.</p>
+            <p class="text-muted">Dica: Operação XOR (Valores iguais = 0, Valores diferentes = 1).</p>
             <div class="d-flex justify-content-center">
                 <table class="table table-bordered w-auto">
                     <tbody id="xorMatrix">
@@ -273,6 +274,11 @@
         </div>
     </div>
 
+    <script>
+        function validateKeyInput(input) {
+            input.value = input.value.replace(/[^01]/g, '').slice(0, 16);
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
