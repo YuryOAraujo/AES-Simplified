@@ -58,26 +58,26 @@
                     <tbody>
                         <tr>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A0" placeholder="A0"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A1" placeholder="A1"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A2" placeholder="A2"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A3" placeholder="A3"></td>
-                        </tr>
-                        <tr>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A4" placeholder="A4"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A5" placeholder="A5"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A6" placeholder="A6"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A7" placeholder="A7"></td>
-                        </tr>
-                        <tr>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A8" placeholder="A8"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A9" placeholder="A9"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A10" placeholder="A10"></td>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A11" placeholder="A11"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A12" placeholder="A12"></td>
                         </tr>
                         <tr>
-                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A12" placeholder="A12"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A1" placeholder="A1"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A5" placeholder="A5"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A9" placeholder="A9"></td>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A13" placeholder="A13"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A2" placeholder="A2"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A6" placeholder="A6"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A10" placeholder="A10"></td>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A14" placeholder="A14"></td>
+                        </tr>
+                        <tr>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A3" placeholder="A3"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A7" placeholder="A7"></td>
+                            <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A11" placeholder="A11"></td>
                             <td><input type="number" min="0" max="1" class="matrix-cell form-control text-center" id="A15" placeholder="A15"></td>
                         </tr>
                     </tbody>
@@ -144,6 +144,33 @@
         <div id="shiftRowsSection" class="d-none mt-4">
             <p class="fw-bold">Deslocamento das Linhas</p>
             <p class="text-muted">Desloque as linhas conforme as instruções abaixo:</p>
+            <p class="text-muted">Dica: Clique e arraste os valores das linhas para deslocá-los.</p>
+            <table class="table table-bordered w-auto mx-auto">
+                <thead>
+                    <tr>
+                        <th class="w-50 bg-primary text-light">Deslocamento de linha</th>
+                        <th class="w-50 bg-primary text-light">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primeira Linha</td>
+                        <td>Mantem</td>
+                    </tr>
+                    <tr>
+                        <td>Segunda Linha</td>
+                        <td> Desloca uma para a esquerda</td>
+                    </tr>
+                    <tr>
+                        <td>Terceira Linha</td>
+                        <td>Desloca duas para a esquerda</td>
+                    </tr>
+                    <tr>
+                        <td>Quarta Linha</td>
+                        <td>Desloca três para a esquerda</td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="d-flex justify-content-center">
                 <table class="table table-bordered w-auto">
                     <tbody id="shiftMatrix">
