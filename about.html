@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AES Simplificado - Sobre</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <div class="container">
+            <h1 class="display-4">
+                <i class="fas fa-lock"></i> AES Simplificado
+            </h1>
+        </div>
+    </header>
+    
+    <div class="container min-vh-100 rounded-4 p-3">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Sobre</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="index.html" id="switchModeLink">Criptografar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="decrypt.html" id="switchModeLink">Descriptografar</a>
+            </li>
+            <div class="ms-auto d-flex">
+                <button id="theme-toggle-btn" class="btn btn-primary">
+                    Alterar tema
+                </button>
+            </div>
+        </ul>
+
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text-center mb-4">Criptografia e o AES (Advanced Encryption Standard)</h2>
+                
+                <section class="mb-5">
+                    <h3>O que é Criptografia?</h3>
+                    <p>Criptografia é a prática de proteger informações através da transformação dos dados em um formato que é ilegível para qualquer pessoa não autorizada. Ela envolve converter dados legíveis (chamados de "texto plano") em uma forma codificada (chamada de "texto cifrado") usando um algoritmo e uma chave. Apenas aqueles que possuem a chave correta podem reverter o processo e acessar as informações originais.</p>
+                </section>
+
+                <section class="mb-5">
+                    <h3>História e Criação do AES</h3>
+                    <p>O Advanced Encryption Standard (AES) foi desenvolvido como resposta à crescente vulnerabilidade do Data Encryption Standard (DES), que era o padrão anterior. Em 1997, o Instituto Nacional de Padrões e Tecnologia (NIST) dos Estados Unidos iniciou um processo para selecionar um novo algoritmo de criptografia que pudesse proteger informações sensíveis no século 21.</p>
+                    <p>Após um rigoroso processo de seleção que durou 5 anos, o algoritmo Rijndael, criado pelos criptógrafos belgas Joan Daemen e Vincent Rijmen, foi escolhido para se tornar o AES. O AES foi oficialmente adotado pelo governo dos EUA em 2002 e desde então se tornou um dos algoritmos de criptografia mais amplamente utilizados em todo o mundo.</p>
+                </section>
+
+                <section class="mb-5">
+                    <h3>O que é o AES?</h3>
+                    <p>O AES é um algoritmo de criptografia simétrica de bloco. Isso significa que:</p>
+                    <ul>
+                        <li><strong>Simétrica:</strong> A mesma chave é usada tanto para criptografar quanto para descriptografar os dados.</li>
+                        <li><strong>De bloco:</strong> O algoritmo opera em blocos fixos de dados, em vez de processar um bit ou byte por vez.</li>
+                    </ul>
+                    <p>O AES suporta tamanhos de chave de 128, 192 e 256 bits, e opera em blocos de dados de 128 bits. O número de rodadas de processamento depende do tamanho da chave: 10 rodadas para chaves de 128 bits, 12 rodadas para 192 bits e 14 rodadas para 256 bits.</p>
+                </section>
+
+                <section class="mb-5">
+                    <h3>Como funciona a Criptografia AES</h3>
+                    <p>O processo de criptografia AES envolve várias etapas e transformações matemáticas complexas. Aqui está uma explicação detalhada dos principais passos:</p>
+
+                    <ol class="list-group list-group-numbered mb-4">
+                        <li class="list-group-item">
+                            <h5>Expansão da Chave</h5>
+                            <p>Antes de iniciar a criptografia, o AES gera um conjunto de "chaves de rodada" a partir da chave original. Este processo é chamado de expansão de chave ou key schedule.</p>
+                            <ul>
+                                <li>Para uma chave de 128 bits, são geradas 11 chaves de 128 bits (incluindo a chave original).</li>
+                                <li>Cada chave de rodada é derivada da anterior usando uma combinação de operações como substituição, rotação e XOR.</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Divisão dos Dados em Blocos</h5>
+                            <p>O texto plano é dividido em blocos de 128 bits (16 bytes). Se o último bloco for menor que 128 bits, ele é preenchido (padding) para atingir o tamanho correto.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Rodada Inicial</h5>
+                            <p>Antes das rodadas principais, o AES realiza uma operação inicial:</p>
+                            <ul>
+                                <li><strong>AddRoundKey:</strong> Cada byte do bloco é combinado com um byte da chave inicial usando a operação XOR bit a bit.</li>
+                            </ul>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Rodadas Principais</h5>
+                            <p>O AES então executa 9, 11 ou 13 rodadas idênticas (dependendo do tamanho da chave), cada uma consistindo em quatro operações:</p>
+                            <ol>
+                                <li><strong>SubBytes:</strong> Cada byte é substituído por outro de acordo com uma tabela pré-definida (S-box). Isso adiciona não-linearidade ao cifrador.</li>
+                                <li><strong>ShiftRows:</strong> Os bytes em cada linha do estado são deslocados ciclicamente para a esquerda. A primeira linha não é alterada, a segunda é deslocada por um byte, a terceira por dois bytes, e a quarta por três bytes.</li>
+                                <li><strong>MixColumns:</strong> Cada coluna de quatro bytes é transformada usando uma operação de álgebra linear que combina os quatro bytes em cada coluna.</li>
+                                <li><strong>AddRoundKey:</strong> Cada byte do estado é combinado com a chave de rodada usando a operação XOR.</li>
+                            </ol>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Rodada Final</h5>
+                            <p>A última rodada é ligeiramente diferente, omitindo a etapa MixColumns:</p>
+                            <ol>
+                                <li>SubBytes</li>
+                                <li>ShiftRows</li>
+                                <li>AddRoundKey</li>
+                            </ol>
+                        </li>
+                        <li class="list-group-item">
+                            <h5>Saída do Texto Cifrado</h5>
+                            <p>O resultado final de todas essas operações é o bloco de texto cifrado. Este processo é repetido para cada bloco de 128 bits do texto plano original.</p>
+                        </li>
+                    </ol>
+                </section>
+
+                <section class="mb-5">
+                    <h3>Segurança do AES</h3>
+                    <p>A segurança do AES baseia-se em vários fatores:</p>
+                    <ul>
+                        <li>A complexidade matemática das operações envolvidas.</li>
+                        <li>O grande número de possíveis chaves (2^128, 2^192 ou 2^256, dependendo do tamanho da chave).</li>
+                        <li>A natureza não linear da substituição de bytes (SubBytes).</li>
+                        <li>A difusão proporcionada pelas operações ShiftRows e MixColumns.</li>
+                    </ul>
+                    <p>Até o momento, não há ataques práticos conhecidos que possam quebrar o AES quando implementado corretamente. A maioria dos ataques bem-sucedidos contra sistemas que usam AES exploram falhas na implementação ou no gerenciamento de chaves, não no algoritmo em si.</p>
+                </section>
+
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading">Importante!</h4>
+                    <p>Embora o AES seja um algoritmo extremamente seguro, sua eficácia depende criticamente da proteção da chave de criptografia. Mesmo com o algoritmo sendo público e bem conhecido, sem a chave correta, é computacionalmente inviável decifrar os dados criptografados em um tempo razoável com a tecnologia atual.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script src="theme.js"></script>
+</body>
+</html>                                                                     

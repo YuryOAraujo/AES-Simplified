@@ -15,13 +15,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function applyTheme() {
-      const themeFromCookie = getCookie('theme');
-      if (themeFromCookie) {
-          htmlElement.setAttribute('data-bs-theme', themeFromCookie);
-      } else {
-          htmlElement.setAttribute('data-bs-theme', 'light');
-      }
-  }
+    const themeFromCookie = getCookie('theme');
+    if (themeFromCookie) {
+        htmlElement.setAttribute('data-bs-theme', themeFromCookie);
+    } else {
+        // Definir o tema escuro como padrão
+        htmlElement.setAttribute('data-bs-theme', 'dark');
+        setCookie('theme', 'dark', 30); // Salva a preferência no cookie
+    }
+}
 
   applyTheme();
 
