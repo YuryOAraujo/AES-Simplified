@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const shiftFeedback = document.getElementById("shiftFeedback");
     const sboxCells = document.querySelectorAll('.sbox-cell');
     const reorderString = document.getElementById('reorderString');
-    const reorderFeedback = document.getElementById('reorderFeedback');
+    const inputGroup = document.getElementById('inputGroup');
     
     for (let i = 0; i <= 15; i++) {
         inputs[i] = document.getElementById(`X${i}`);
@@ -372,6 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
             // Mostra a próxima seção (deslocamento de linhas)
             reorderString.classList.remove('d-none');
+            window.location.href = '#reorderString';
         } else {
             sboxFeedback.textContent = 'Preencha a matriz corretamente de acordo com a S-Box.';
             sboxFeedback.classList.remove('text-success');
@@ -385,16 +386,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateReorderString() {
         let correct = true;
-        
+    
         const sboxMatrix = [
-            [document.getElementById("S0").value, document.getElementById("S4").value, document.getElementById("S8").value, document.getElementById("S12").value],
-            [document.getElementById("S1").value, document.getElementById("S5").value, document.getElementById("S9").value, document.getElementById("S13").value],
-            [document.getElementById("S2").value, document.getElementById("S6").value, document.getElementById("S10").value, document.getElementById("S14").value],
-            [document.getElementById("S3").value, document.getElementById("S7").value, document.getElementById("S11").value, document.getElementById("S15").value]
+            [document.getElementById("S0").value, document.getElementById("S1").value, document.getElementById("S2").value, document.getElementById("S3").value],
+            [document.getElementById("S4").value, document.getElementById("S5").value, document.getElementById("S6").value, document.getElementById("S7").value],
+            [document.getElementById("S8").value, document.getElementById("S9").value, document.getElementById("S10").value, document.getElementById("S11").value],
+            [document.getElementById("S12").value, document.getElementById("S13").value, document.getElementById("S14").value, document.getElementById("S15").value]
         ];
     
         let reorderedBits = "";
     
+        // Preenchendo em colunas (da esquerda para a direita)
         for (let col = 0; col < 4; col++) {
             for (let row = 0; row < 4; row++) {
                 reorderedBits += sboxMatrix[row][col];
@@ -406,10 +408,8 @@ document.addEventListener('DOMContentLoaded', () => {
             let expectedValue = reorderedBits[i];
     
             if (xCell.value === expectedValue) {
-                xCell.classList.remove("border-danger");
                 xCell.classList.add("border", "border-success");
             } else {
-                xCell.classList.add("border", "border-danger");
                 xCell.classList.remove("border-success");
                 correct = false;
             }
@@ -420,17 +420,38 @@ document.addEventListener('DOMContentLoaded', () => {
             reorderFeedback.textContent = "Todos os valores estão corretos!";
             reorderFeedback.classList.add("text-success");
             reorderFeedback.classList.remove("text-error");
+    
+            // Convertendo os bits para caracteres ASCII
+            let firstByte = reorderedBits.slice(0, 8);  // Pega os primeiros 8 bits
+            let secondByte = reorderedBits.slice(8, 16); // Pega os próximos 8 bits
+    
+            let char1 = String.fromCharCode(parseInt(firstByte, 2)); 
+            let char2 = String.fromCharCode(parseInt(secondByte, 2));
+    
+            document.getElementById("charInput1").value = char1;
+            document.getElementById("charInput2").value = char2;
+    
+            // Exibir a div corretamente
+            inputGroup.classList.remove('d-none');
+    
         } else {
             reorderFeedback.textContent = "Alguns valores estão incorretos. Verifique!";
             reorderFeedback.classList.add("text-error");
             reorderFeedback.classList.remove("text-success");
+    
+            document.getElementById("charInput1").value = "";
+            document.getElementById("charInput2").value = "";
+    
+            // Esconder a div novamente se houver erro
+            inputGroup.classList.add('d-none');
         }
     }
     
-    document.addEventListener("DOMContentLoaded", validateReorderString);
+    document.addEventListener("DOMContentLoaded", () => {
+        validateReorderString();
+    });
     
     for (let i = 0; i < 16; i++) {
         document.getElementById(`R${i}`).addEventListener("input", validateReorderString);
     }
-    
 });
