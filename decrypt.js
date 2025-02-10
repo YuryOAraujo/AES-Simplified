@@ -330,21 +330,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applySBox(bit) {
-        return bit === "0" ? "1" : "0"; 
+        return bit === "0" ? "1" : "0"; // Inverte o bit
     }
-
+    
     function validateSBoxMatrix() {
         let correct = true;
-
+    
+        // Mapeia os valores dos inputs originais para a matriz 4x4
+        const originalBits = [
+            [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], // Linha 1
+            [inputs[1].value, inputs[13].value, inputs[9].value, inputs[5].value], // Linha 2
+            [inputs[6].value, inputs[2].value, inputs[14].value, inputs[10].value], // Linha 3
+            [inputs[3].value, inputs[15].value, inputs[11].value, inputs[7].value]  // Linha 4
+        ];
+    
+        // Valida cada célula da matriz S-Box
         sboxCells.forEach((cell, index) => {
-            const originalBit = [
-                [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
-                [inputs[1].value, inputs[13].value, inputs[9].value, inputs[5].value], 
-                [inputs[6].value, inputs[2].value, inputs[14].value, inputs[10].value], 
-                [inputs[3].value, inputs[15].value, inputs[11].value, inputs[7].value]  
-            ];
-            const expectedBit = applySBox(originalBit); 
-
+            // Calcula a posição na matriz original
+            const row = Math.floor(index / 4); // Linha da matriz (0 a 3)
+            const col = index % 4;             // Coluna da matriz (0 a 3)
+    
+            // Obtém o bit original e aplica a S-Box
+            const originalBit = originalBits[row][col];
+            const expectedBit = applySBox(originalBit);
+    
+            // Verifica se o valor da célula S-Box está correto
             if (cell.value === expectedBit) {
                 cell.classList.add('border', 'border-success');
             } else {
@@ -352,21 +362,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 correct = false;
             }
         });
-
+    
+        // Exibe feedback ao usuário
         if (correct) {
             sboxFeedback.textContent = 'Matriz da S-Box preenchida corretamente!';
             sboxFeedback.classList.add('text-success');
-
-            
+    
+            // Mostra a próxima seção (deslocamento de linhas)
             shiftRowsSection.classList.remove('d-none');
-            window.location.href = '#shiftRowsSectionsSection';
-            populateShiftMatrix();
         } else {
             sboxFeedback.textContent = 'Preencha a matriz corretamente de acordo com a S-Box.';
             sboxFeedback.classList.remove('text-success');
         }
     }
     
+    // Adiciona o evento de input a cada célula da S-Box
     sboxCells.forEach(cell => {
         cell.addEventListener('input', validateSBoxMatrix);
     });
