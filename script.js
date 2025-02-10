@@ -344,11 +344,18 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const sboxValues = Array.from(sboxCells).map(cell => cell.value); 
 
+        // const expectedShift = [
+        //     [sboxValues[3], sboxValues[0], sboxValues[1], sboxValues[2]], 
+        //     [sboxValues[4], sboxValues[5], sboxValues[6], sboxValues[7]], 
+        //     [sboxValues[9], sboxValues[10], sboxValues[11], sboxValues[8]], 
+        //     [sboxValues[14], sboxValues[15], sboxValues[12], sboxValues[13]]  
+        // ];
+
         const expectedShift = [
-            [sboxValues[3], sboxValues[0], sboxValues[1], sboxValues[2]], 
-            [sboxValues[4], sboxValues[5], sboxValues[6], sboxValues[7]], 
-            [sboxValues[9], sboxValues[10], sboxValues[11], sboxValues[8]], 
-            [sboxValues[14], sboxValues[15], sboxValues[12], sboxValues[13]]  
+            [sboxValues[3], sboxValues[4], sboxValues[9], sboxValues[14]], 
+            [sboxValues[0], sboxValues[5], sboxValues[10], sboxValues[15]], 
+            [sboxValues[1], sboxValues[6], sboxValues[11], sboxValues[12]], 
+            [sboxValues[2], sboxValues[7], sboxValues[8], sboxValues[13]]  
         ];
 
         for (let i = 0; i < 4; i++) {

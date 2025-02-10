@@ -181,11 +181,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = Array.from(document.querySelectorAll('#shiftColumnMatrix tr'));
     
         // Criando a matriz deslocada uma posição à esquerda
+        // expectedShift = [
+        //     [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
+        //     [inputs[13].value, inputs[9].value, inputs[5].value, inputs[1].value], 
+        //     [inputs[14].value, inputs[10].value, inputs[6].value, inputs[2].value], 
+        //     [inputs[15].value, inputs[11].value, inputs[7].value, inputs[3].value]           
+        // ];
+
         expectedShift = [
-            [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
-            [inputs[13].value, inputs[9].value, inputs[5].value, inputs[1].value], 
-            [inputs[14].value, inputs[10].value, inputs[6].value, inputs[2].value], 
-            [inputs[15].value, inputs[11].value, inputs[7].value, inputs[3].value]           
+            [inputs[8].value, inputs[4].value, inputs[0].value, inputs[12].value], 
+            [inputs[9].value, inputs[5].value, inputs[1].value, inputs[13].value], 
+            [inputs[10].value, inputs[6].value, inputs[2].value, inputs[14].value], 
+            [inputs[11].value, inputs[7].value, inputs[3].value, inputs[15].value]           
         ];
                 
         console.log(expectedShift);
