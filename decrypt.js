@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const shiftRowsSection = document.getElementById("shiftRowsSection");
     const shiftFeedback = document.getElementById("shiftFeedback");
     const sboxCells = document.querySelectorAll('.sbox-cell');
+    const reorderString = document.getElementById('reorderString');
+    const reorderFeedback = document.getElementById('reorderFeedback');
     
     for (let i = 0; i <= 15; i++) {
         inputs[i] = document.getElementById(`X${i}`);
@@ -369,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
             sboxFeedback.classList.add('text-success');
     
             // Mostra a próxima seção (deslocamento de linhas)
-            shiftRowsSection.classList.remove('d-none');
+            reorderString.classList.remove('d-none');
         } else {
             sboxFeedback.textContent = 'Preencha a matriz corretamente de acordo com a S-Box.';
             sboxFeedback.classList.remove('text-success');
@@ -380,4 +382,55 @@ document.addEventListener('DOMContentLoaded', () => {
     sboxCells.forEach(cell => {
         cell.addEventListener('input', validateSBoxMatrix);
     });
+
+    function validateReorderString() {
+        let correct = true;
+        
+        const sboxMatrix = [
+            [document.getElementById("S0").value, document.getElementById("S4").value, document.getElementById("S8").value, document.getElementById("S12").value],
+            [document.getElementById("S1").value, document.getElementById("S5").value, document.getElementById("S9").value, document.getElementById("S13").value],
+            [document.getElementById("S2").value, document.getElementById("S6").value, document.getElementById("S10").value, document.getElementById("S14").value],
+            [document.getElementById("S3").value, document.getElementById("S7").value, document.getElementById("S11").value, document.getElementById("S15").value]
+        ];
+    
+        let reorderedBits = "";
+    
+        for (let col = 0; col < 4; col++) {
+            for (let row = 0; row < 4; row++) {
+                reorderedBits += sboxMatrix[row][col];
+            }
+        }
+    
+        for (let i = 0; i < 16; i++) {
+            let xCell = document.getElementById(`R${i}`);
+            let expectedValue = reorderedBits[i];
+    
+            if (xCell.value === expectedValue) {
+                xCell.classList.remove("border-danger");
+                xCell.classList.add("border", "border-success");
+            } else {
+                xCell.classList.add("border", "border-danger");
+                xCell.classList.remove("border-success");
+                correct = false;
+            }
+        }
+    
+        let reorderFeedback = document.getElementById("reorderFeedback");
+        if (correct) {
+            reorderFeedback.textContent = "Todos os valores estão corretos!";
+            reorderFeedback.classList.add("text-success");
+            reorderFeedback.classList.remove("text-error");
+        } else {
+            reorderFeedback.textContent = "Alguns valores estão incorretos. Verifique!";
+            reorderFeedback.classList.add("text-error");
+            reorderFeedback.classList.remove("text-success");
+        }
+    }
+    
+    document.addEventListener("DOMContentLoaded", validateReorderString);
+    
+    for (let i = 0; i < 16; i++) {
+        document.getElementById(`R${i}`).addEventListener("input", validateReorderString);
+    }
+    
 });
