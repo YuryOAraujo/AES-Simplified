@@ -179,20 +179,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateColumnShift() {
         const rows = Array.from(document.querySelectorAll('#shiftColumnMatrix tr'));
-    
-        // Criando a matriz deslocada uma posição à esquerda
-        // expectedShift = [
-        //     [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
-        //     [inputs[13].value, inputs[9].value, inputs[5].value, inputs[1].value], 
-        //     [inputs[14].value, inputs[10].value, inputs[6].value, inputs[2].value], 
-        //     [inputs[15].value, inputs[11].value, inputs[7].value, inputs[3].value]           
-        // ];
 
         expectedShift = [
-            [inputs[8].value, inputs[4].value, inputs[0].value, inputs[12].value], 
-            [inputs[9].value, inputs[5].value, inputs[1].value, inputs[13].value], 
-            [inputs[10].value, inputs[6].value, inputs[2].value, inputs[14].value], 
-            [inputs[11].value, inputs[7].value, inputs[3].value, inputs[15].value]           
+            [inputs[4].value, inputs[8].value,  inputs[12].value, inputs[0].value], 
+            [inputs[5].value, inputs[9].value,  inputs[13].value, inputs[1].value], 
+            [inputs[6].value, inputs[10].value, inputs[14].value, inputs[2].value], 
+            [inputs[7].value, inputs[11].value, inputs[15].value, inputs[3].value]           
         ];
                 
         console.log(expectedShift);
@@ -260,11 +252,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function populateShiftMatrix() {
+
         const rows = [
-            [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
-            [inputs[13].value, inputs[9].value, inputs[5].value, inputs[1].value], 
-            [inputs[14].value, inputs[10].value, inputs[6].value, inputs[2].value], 
-            [inputs[15].value, inputs[11].value, inputs[7].value, inputs[3].value]   
+            [inputs[4].value, inputs[8].value,  inputs[12].value, inputs[0].value], 
+            [inputs[5].value, inputs[9].value,  inputs[13].value, inputs[1].value], 
+            [inputs[6].value, inputs[10].value, inputs[14].value, inputs[2].value], 
+            [inputs[7].value, inputs[11].value, inputs[15].value, inputs[3].value]           
         ];
 
         const shiftCells = shiftMatrix.querySelectorAll("td");
@@ -302,11 +295,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const rows = shiftMatrix.querySelectorAll("tr");
 
         const expectedShift = [
-            [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], 
-            [inputs[1].value, inputs[13].value, inputs[9].value, inputs[5].value], 
-            [inputs[6].value, inputs[2].value, inputs[14].value, inputs[10].value], 
-            [inputs[3].value, inputs[15].value, inputs[11].value, inputs[7].value]  
+            [inputs[4].value, inputs[8].value,  inputs[12].value, inputs[0].value], 
+            [inputs[1].value, inputs[5].value, inputs[9].value,  inputs[13].value], 
+            [inputs[14].value, inputs[2].value, inputs[6].value, inputs[10].value, ], 
+            [inputs[11].value, inputs[15].value, inputs[3].value, inputs[7].value]           
         ];
+
+        
 
 
         console.log(expectedShift);
@@ -344,13 +339,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function validateSBoxMatrix() {
         let correct = true;
-    
-        // Mapeia os valores dos inputs originais para a matriz 4x4
+
         const originalBits = [
-            [inputs[12].value, inputs[8].value, inputs[4].value, inputs[0].value], // Linha 1
-            [inputs[1].value, inputs[13].value, inputs[9].value, inputs[5].value], // Linha 2
-            [inputs[6].value, inputs[2].value, inputs[14].value, inputs[10].value], // Linha 3
-            [inputs[3].value, inputs[15].value, inputs[11].value, inputs[7].value]  // Linha 4
+            [inputs[4].value, inputs[8].value,  inputs[12].value, inputs[0].value], 
+            [inputs[1].value, inputs[5].value, inputs[9].value,  inputs[13].value], 
+            [inputs[14].value, inputs[2].value, inputs[6].value, inputs[10].value, ], 
+            [inputs[11].value, inputs[15].value, inputs[3].value, inputs[7].value]           
         ];
     
         // Valida cada célula da matriz S-Box
@@ -424,6 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
         let reorderFeedback = document.getElementById("reorderFeedback");
         if (correct) {
+            window.location.href = '#reorderFeedback';
             reorderFeedback.textContent = "Todos os valores estão corretos!";
             reorderFeedback.classList.add("text-success");
             reorderFeedback.classList.remove("text-error");
